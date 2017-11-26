@@ -23,14 +23,11 @@ int main() {
 	std::cin.get();
 
 	if (command == "write") {
-		QCFS test = QCFS("Test Volume", TWO_MB, 8);
+		QCFS test = QCFS("Test Volume", FOUR_KB, 64);
 
 		root_data* test_info = test.info();
 
-		FILE* output;
-		fopen_s(&output, "test0.qcfs", "wb");
-		size_t bytes = test.dump(output);
-		fclose(output);
+		size_t bytes = test.dump("test0.qcfs");
 
 		std::cout.imbue(std::locale(""));
 		std::cout << (bytes / 1024) << "KB written to test0.qcfs" << std::endl;

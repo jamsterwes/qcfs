@@ -8,7 +8,9 @@ typedef uint8_t byte;
 typedef uint64_t chunk_ptr;
 
 const uint32_t TWO_MB = 2 * 1024 * 1024;
-const uint32_t DATA_MINUS_HEAD = TWO_MB - sizeof(byte) - sizeof(chunk_ptr);
+const uint32_t FOUR_KB = 4 * 1024;
+const uint32_t BLOCK_SIZE = FOUR_KB;
+const uint32_t DATA_MINUS_HEAD = FOUR_KB - sizeof(byte) - sizeof(chunk_ptr);
 
 
 enum class chunk_id : byte {

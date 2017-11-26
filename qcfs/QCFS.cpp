@@ -1,9 +1,11 @@
 #include "QCFS.hpp"
 
 QCFS::QCFS(chunk* ichunks) {
-	uint64_t blocks = ((root_data*)((&ichunks[0])->data))->size_in_blocks;
-	chunks = pallocs(chunk, blocks);
-	memcpy_s((void*)chunks, blocks * TWO_MB, (void*)ichunks, TWO_MB * blocks);
+	root_data* rootd = ((root_data*)((&ichunks[0])->data));
+	bs = rootd->block_size_in_bytes;
+	bc = rootd->size_in_blocks;
+	chunks = pallocs(chunk, bs);
+	memcpy_s((void*)chunks, bc * bs, (void*)ichunks, bs * bc);
 }
 
 QCFS::QCFS(std::string volume_name, uint32_t block_size, uint64_t blocks) : bc(blocks), bs(block_size)
@@ -11,12 +13,16 @@ QCFS::QCFS(std::string volume_name, uint32_t block_size, uint64_t blocks) : bc(b
 	chunks = pallocs(chunk, blocks);
 	memset((byte*)chunks, 0, sizeof(chunk) * blocks);
 
+	// Init Root
 	chunk* root = init_root(volume_name, block_size, blocks);
 	set_chunk(0, root);
 
+	// Init Block Table
 	chunk* bt = init_bt();
 	set_chunk(1, bt);
+	info()->block_table_ptr = 1;
 
+	// Populate Block Table
 	set_bid(0, chunk_id::BASE_ROOT);
 	set_bid(1, chunk_id::BASE_BT);
 }
@@ -70,17 +76,21 @@ QCFS QCFS::from_file(std::string filename)
 
 	FILE* input;
 	fopen_s(&input, "test0.qcfs", "rb");
-	fread((void*)toor, TWO_MB, 1, input);
+	fread((void*)toor, BLOCK_SIZE, 1, input);
 	root_data* newinfo = (root_data*)toor->data;
 	uint64_t blocks = newinfo->size_in_blocks;
 	_chunks = pallocs(chunk, blocks);
 	fseek(input, 0, 0);
-	fread((void*)_chunks, TWO_MB, blocks, input);
+	fread((void*)_chunks, FOUR_KB, blocks, input);
 	fclose(input);
 
 	return QCFS(_chunks);
 }
 
-size_t QCFS::dump(FILE* fp) {
-	return fwrite(chunks, bs, bc, fp);
+size_t QCFS::dump(std::string filename) {
+	FILE *fp;
+	fopen_s(&fp, filename.c_str(), "wb");
+	size_t output = bs * fwrite(chunks, bs, bc, fp);
+	fclose(fp);
+	return output;
 }

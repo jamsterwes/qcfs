@@ -13,7 +13,7 @@ public:
 	QCFS(std::string volume_name, uint32_t block_size, uint64_t blocks);
 	~QCFS();
 
-	size_t dump(FILE* fp);
+	size_t dump(std::string filename);
 	root_data* info();
 	bt_data* bt();
 
