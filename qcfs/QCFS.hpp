@@ -1,6 +1,6 @@
 #pragma once
-#include "chunk.h"
-#include "root_chunk.h"
+#include "chunk.hpp"
+#include "root_chunk.hpp"
 #include <string>
 
 class QCFS

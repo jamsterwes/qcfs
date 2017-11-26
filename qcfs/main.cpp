@@ -1,12 +1,12 @@
-#include "chunk.h"
-#include "root_chunk.h"
+#include "chunk.hpp"
+#include "root_chunk.hpp"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
 #include <string>
 #include <iostream>
-#include "QCFS.h"
+#include "QCFS.hpp"
 
 int main() {
 	std::cout << "Type write to write the test file or read to read it back" << std::endl;

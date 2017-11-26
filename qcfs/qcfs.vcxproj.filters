@@ -15,19 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="chunk.h">
+    <ClInclude Include="root_chunk.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="root_chunk.h">
+    <ClInclude Include="QCFS.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QCFS.h">
+    <ClInclude Include="chunk.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bt_chunk.h">
+    <ClInclude Include="bt_entry.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bt_entry.h">
+    <ClInclude Include="bt_chunk.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

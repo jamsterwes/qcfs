@@ -1,5 +1,5 @@
 #pragma once
-#include "chunk.h"
+#include "chunk.hpp"
 #pragma pack(push, 1)
 struct bt_entry {
 	byte block_id;

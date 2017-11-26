@@ -1,5 +1,5 @@
-#include "QCFS.h"
-#include "bt_chunk.h"
+#include "QCFS.hpp"
+#include "bt_chunk.hpp"
 
 QCFS::QCFS(std::string volume_name, uint32_t block_size, uint64_t blocks) : bc(blocks), bs(block_size)
 {

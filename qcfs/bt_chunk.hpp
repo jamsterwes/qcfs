@@ -1,6 +1,6 @@
 #pragma once
-#include "chunk.h"
-#include "bt_entry.h"
+#include "chunk.hpp"
+#include "bt_entry.hpp"
 
 const uint32_t BT_DATA_SIZE = sizeof(byte);
 const uint32_t BT_BLOCKAMT = DATA_MINUS_HEAD / sizeof(bt_entry);
