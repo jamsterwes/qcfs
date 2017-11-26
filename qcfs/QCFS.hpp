@@ -22,6 +22,7 @@ public:
 private:
 	chunk* init_root(std::string volume_name, uint32_t block_size, uint64_t blocks);
 	chunk* init_bt();
+	chunk* init_ft();
 	void set_chunk(uint64_t pos, chunk* c);
 	void set_bid(uint64_t block, chunk_id bid);
 

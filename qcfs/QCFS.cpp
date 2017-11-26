@@ -48,13 +48,20 @@ chunk* QCFS::init_root(std::string volume_name, uint32_t block_size, uint64_t bl
 
 chunk* QCFS::init_bt() {
 	chunk* bt = palloc(chunk);
-	((root_data*)((&chunks[0])->data))->block_alloc_count++;
+	info()->block_alloc_count++;
 	bt_chunk(bt);
 	return bt;
 }
 
+chunk* QCFS::init_ft() {
+	chunk* ft = palloc(chunk);
+	info()->block_alloc_count++;
+	// ft_chunk(ft);
+	return ft;
+}
+
 void QCFS::set_bid(uint64_t block, chunk_id bid) {
-	(&((bt_data*)((&chunks[1])->data))->entries[block])->block_id = (byte)bid;
+	(&(bt()->entries[block]))->block_id = (byte)bid;
 }
 
 void QCFS::set_chunk(uint64_t pos, chunk* c) {
@@ -66,7 +73,7 @@ root_data* QCFS::info() {
 }
 
 bt_data* QCFS::bt() {
-	return (bt_data*)((&chunks[1])->data);
+	return (bt_data*)((&chunks[info()->block_table_ptr])->data);
 }
 
 QCFS QCFS::from_file(std::string filename)

@@ -121,6 +121,7 @@
     <ClInclude Include="bt_chunk.hpp" />
     <ClInclude Include="bt_entry.hpp" />
     <ClInclude Include="chunk.hpp" />
+    <ClInclude Include="ft_entry.h" />
     <ClInclude Include="QCFS.hpp" />
     <ClInclude Include="root_chunk.hpp" />
   </ItemGroup>
