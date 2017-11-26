@@ -1,5 +1,6 @@
 #include "chunk.hpp"
 #include "root_chunk.hpp"
+#include "bt_chunk.hpp"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,6 +8,11 @@
 #include <string>
 #include <iostream>
 #include "QCFS.hpp"
+
+void gracefully_exit() {
+	std::cout << std::endl << "Press enter to exit." << std::endl;
+	std::cin.get();
+}
 
 int main() {
 	std::cout << "Type write to write the test file or read to read it back" << std::endl;
@@ -19,8 +25,7 @@ int main() {
 	if (command == "write") {
 		QCFS test = QCFS("Test Volume", TWO_MB, 8);
 
-		root_data* test_info = palloc(root_data);
-		test.info(test_info);
+		root_data* test_info = test.info();
 
 		FILE* output;
 		fopen_s(&output, "test0.qcfs", "wb");
@@ -29,25 +34,24 @@ int main() {
 
 		std::cout.imbue(std::locale(""));
 		std::cout << (bytes / 1024) << "KB written to test0.qcfs" << std::endl;
-		std::cin.get();
+
+		gracefully_exit();
 	} else if (command == "read") {
-		chunk* toor = palloc(chunk);
-		chunk* chunks;
 
-		FILE* input;
-		fopen_s(&input, "test0.qcfs", "rb");
-		fread((void*)toor, TWO_MB, 1, input);
-		root_data* newinfo = (root_data*)toor->data;
-		uint64_t blocks = newinfo->size_in_blocks;
-		chunks = pallocs(chunk, blocks);
-		fseek(input, 0, 0);
-		fread((void*)chunks, TWO_MB, blocks, input);
-		fclose(input);
+		QCFS test2 = QCFS::from_file("test0.qcfs");
 
+		uint32_t block_size = test2.info()->block_size_in_bytes;
+		uint64_t blocks = test2.info()->size_in_blocks;
+		uint64_t alloc = test2.info()->block_alloc_count;
+		bt_entry* bt_entries = test2.bt()->entries;
 
-		printf("Block Size: %iKB \nVolume Size (in blocks): %" PRIu64 " blocks\nBlocks Occupied: %" PRIu64 " blocks (%0.2f%%)\n", newinfo->block_size_in_bytes / 1024, newinfo->size_in_blocks, newinfo->block_alloc_count, (double)newinfo->block_alloc_count / (double)newinfo->size_in_blocks);
+		printf("Block Size: %iKB \nVolume Size (in blocks): %" PRIu64 " blocks\nBlocks Occupied: %" PRIu64 " blocks (%0.2f%%)\n", block_size / 1024, blocks, alloc, (double)alloc / (double)blocks);
 
-		std::cin.get();
+		for (int i = 0; i < blocks; i++) {
+			printf("Block %d: 0x%02x\n", i, bt_entries[i]);
+		}
+
+		gracefully_exit();
 	}
 
 	return 0;
