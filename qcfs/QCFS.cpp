@@ -22,9 +22,15 @@ QCFS::QCFS(std::string volume_name, uint32_t block_size, uint64_t blocks) : bc(b
 	set_chunk(1, bt);
 	info()->block_table_ptr = 1;
 
+	// Init File Table
+	chunk* ft = init_ft();
+	set_chunk(2, ft);
+	info()->file_table_ptr = 2;
+
 	// Populate Block Table
 	set_bid(0, chunk_id::BASE_ROOT);
 	set_bid(1, chunk_id::BASE_BT);
+	set_bid(2, chunk_id::BASE_FT);
 }
 
 QCFS::~QCFS()
@@ -56,7 +62,7 @@ chunk* QCFS::init_bt() {
 chunk* QCFS::init_ft() {
 	chunk* ft = palloc(chunk);
 	info()->block_alloc_count++;
-	// ft_chunk(ft);
+	ft_chunk(ft);
 	return ft;
 }
 
@@ -74,6 +80,19 @@ root_data* QCFS::info() {
 
 bt_data* QCFS::bt() {
 	return (bt_data*)((&chunks[info()->block_table_ptr])->data);
+}
+
+ft_data* QCFS::ft() {
+	return (ft_data*)((&chunks[info()->file_table_ptr])->data);
+}
+
+ft_entry* QCFS::root_folder() {
+	return &(ft()->entries[0]);
+}
+
+ft_entry QCFS::ft_entry(ft_ptr ptr)
+{
+	return ft()->entries[ptr];
 }
 
 QCFS QCFS::from_file(std::string filename)

@@ -121,12 +121,14 @@
     <ClInclude Include="bt_chunk.hpp" />
     <ClInclude Include="bt_entry.hpp" />
     <ClInclude Include="chunk.hpp" />
-    <ClInclude Include="ft_entry.h" />
+    <ClInclude Include="ft_chunk.hpp" />
+    <ClInclude Include="ft_entry.hpp" />
     <ClInclude Include="QCFS.hpp" />
     <ClInclude Include="root_chunk.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bt_chunk.cpp" />
+    <ClCompile Include="ft_chunk.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QCFS.cpp" />
     <ClCompile Include="root_chunk.cpp" />

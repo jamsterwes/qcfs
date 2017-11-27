@@ -30,7 +30,10 @@
     <ClInclude Include="bt_chunk.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ft_entry.h">
+    <ClInclude Include="ft_entry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ft_chunk.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="bt_chunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ft_chunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

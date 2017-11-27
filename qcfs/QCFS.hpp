@@ -2,6 +2,7 @@
 #include "chunk.hpp"
 #include "root_chunk.hpp"
 #include "bt_chunk.hpp"
+#include "ft_chunk.hpp"
 #include <string>
 
 class QCFS
@@ -16,7 +17,11 @@ public:
 	size_t dump(std::string filename);
 	root_data* info();
 	bt_data* bt();
+	ft_data* ft();
+	ft_entry* root_folder();
+	ft_entry ft_entry(ft_ptr ptr);
 
+	void set_bid(uint64_t block, chunk_id bid); // DONT LEAVE AS PUBLIC
 	static QCFS from_file(std::string filename);
 
 private:
@@ -24,7 +29,7 @@ private:
 	chunk* init_bt();
 	chunk* init_ft();
 	void set_chunk(uint64_t pos, chunk* c);
-	void set_bid(uint64_t block, chunk_id bid);
+	// void set_bid(uint64_t block, chunk_id bid);
 
 	uint64_t bc;
 	uint32_t bs;
