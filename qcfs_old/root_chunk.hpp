@@ -14,6 +14,4 @@ struct root_data {
 };
 #pragma pack(pop)
 
-const int abc = sizeof(root_data);
-
 void root_chunk(root_data* rinfo, chunk* c);
