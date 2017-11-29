@@ -9,7 +9,7 @@ const uint32_t BT_PADDING = DATA_MINUS_HEAD % sizeof(bt_entry);
 #pragma pack(push, 1)
 struct bt_data {
 	bt_entry entries[BT_BLOCKAMT];
-	byte _padding[BT_PADDING];
+	// byte _padding[BT_PADDING];
 };
 #pragma pack(pop)
 

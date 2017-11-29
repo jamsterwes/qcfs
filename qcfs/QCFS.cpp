@@ -90,9 +90,57 @@ ft_entry* QCFS::root_folder() {
 	return &(ft()->entries[0]);
 }
 
-ft_entry QCFS::ft_entry(ft_ptr ptr)
+ft_entry QCFS::ft_entryi(ft_ptr ptr)
 {
 	return ft()->entries[ptr];
+}
+
+chunk* QCFS::make_data_block(uint64_t offset, byte* data, uint64_t size) {
+	chunk* db = palloc(chunk);
+	memset((void*)db->data, 0x0, DATA_MINUS_HEAD);
+	memcpy_s((void*)db->data, size, (void*)(data + offset), size);
+	return db;
+}
+
+void QCFS::add_file(char* filename, byte* data, uint64_t size)
+{
+	ft_entry* test_file = palloc(ft_entry);
+	ft_entry* next = &ft()->entries[ft()->entry_count++];
+	test_file->ft_id = (byte)ft_entry_id::FILE;
+	ft_file_data* fd = &((&test_file->ent_data)->file);
+	fd->file_size = size;
+	strcpy_s(fd->name, filename);
+	fd->parent = 0;
+	uint64_t data_addr = info()->block_alloc_count++;
+	uint64_t last_data_addr = 0LL;
+	fd->first_data_block = data_addr;
+	memcpy_s((void*)next, sizeof(ft_entry), (void*)test_file, sizeof(ft_entry));
+	
+	uint64_t block_count = size / DATA_MINUS_HEAD;
+	if (size % DATA_MINUS_HEAD > 0) {
+		block_count++;
+	}
+	for (int b = 0; b < block_count; b++) {
+		uint64_t pad = (size - (b * DATA_MINUS_HEAD)) % DATA_MINUS_HEAD;
+		uint64_t curr_size = DATA_MINUS_HEAD;
+		if (b == block_count - 1) {
+			curr_size = pad;
+		}
+		chunk* cdb = make_data_block(b * DATA_MINUS_HEAD, data, curr_size);
+		memcpy_s((void*)&chunks[data_addr], sizeof(chunk), (void*)cdb, sizeof(chunk));
+
+		chunks[data_addr].id = (byte)chunk_id::BASE_DATA;
+		set_bid(data_addr, chunk_id::BASE_DATA);
+		last_data_addr = data_addr;
+		data_addr = info()->block_alloc_count++;
+		if (b < block_count - 1) {
+			chunks[last_data_addr].exp_ptr = data_addr;
+		}
+		else {
+			chunks[last_data_addr].exp_ptr = 0LL;
+		}
+	}
+	info()->block_alloc_count--;
 }
 
 QCFS QCFS::from_file(std::string filename)
@@ -101,7 +149,7 @@ QCFS QCFS::from_file(std::string filename)
 	chunk* _chunks;
 
 	FILE* input;
-	fopen_s(&input, "test0.qcfs", "rb");
+	fopen_s(&input, filename.c_str(), "rb");
 	fread((void*)toor, BLOCK_SIZE, 1, input);
 	root_data* newinfo = (root_data*)toor->data;
 	uint64_t blocks = newinfo->size_in_blocks;

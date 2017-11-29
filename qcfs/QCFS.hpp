@@ -19,7 +19,11 @@ public:
 	bt_data* bt();
 	ft_data* ft();
 	ft_entry* root_folder();
-	ft_entry ft_entry(ft_ptr ptr);
+	ft_entry ft_entryi(ft_ptr ptr);
+
+	chunk* make_data_block(uint64_t offset, byte * data, uint64_t size);
+
+	void add_file(char* filename, byte* data, uint64_t size);
 
 	void set_bid(uint64_t block, chunk_id bid); // DONT LEAVE AS PUBLIC
 	static QCFS from_file(std::string filename);
