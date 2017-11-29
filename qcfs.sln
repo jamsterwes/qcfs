@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qcfs", "qcfs\qcfs.vcxproj", "{004CB6C9-4B04-4885-B716-0B2E4C07774D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qcfs", "qcfs_old\qcfs_old.vcxproj", "{004CB6C9-4B04-4885-B716-0B2E4C07774D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

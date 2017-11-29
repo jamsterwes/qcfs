@@ -13,7 +13,16 @@
 #include <Windows.h>
 
 void display_help() {
-	std::cout << "commands:" << std::endl << "--help" << std::endl << "* Displays this help screen." << std::endl << "--create [file name] [volume name] [size in bytes] [folder path]" << std::endl << "* Creates a new qcfs file." << std::endl << "--extract [file name] [output path]" << std::endl  << "* Extracts the qcfs file into the output path." << std::endl << "--console" << std::endl << "* Opens debug console for developers." << std::endl;
+	std::cout << "commands:" << std::endl
+		<< "--help" << std::endl
+		<< "* Displays this help screen." << std::endl
+		<< "--create [file name] [volume name] [size in bytes] [folder path]"
+		<< std::endl << "* Creates a new qcfs file."
+		<< std::endl << "--extract [file name] [output path]"
+		<< std::endl  << "* Extracts the qcfs file into the output path."
+		<< std::endl << "--console"
+		<< std::endl << "* Opens debug console for developers."
+		<< std::endl;
 }
 
 void load_root_folder(std::string base_path, QCFS* volume) {
