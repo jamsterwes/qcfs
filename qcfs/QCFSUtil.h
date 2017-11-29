@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#define GB * 1024 * 1024 * 1024
+#define MB * 1024 * 1024
+#define KB * 1024
+
 /* Allocates single pointer to element of type X */
 #define palloc(X) (X*)malloc(sizeof(X))
 

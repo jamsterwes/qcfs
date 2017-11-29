@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "QCFSUtil.h"
 #include "QCFSBlock.h"
 
@@ -19,6 +20,9 @@ public:
 
 	/* Stores the length as a 64-bit unsigned integer */
 	uint64_t length;
+
+	/* Takes in a loop function whose parameters are the current block, and two setters to set the file_table id, and the block_table id */
+	void for_each(std::function<void(QCFSBlock*)> loopfunc);
 private:
 	/* Pointer-style array of the blocks to stream */
 	QCFSBlock* _elements;

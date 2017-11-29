@@ -112,6 +112,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="QCFSBlock.h" />
+    <ClInclude Include="QCFSBlockTable.h" />
     <ClInclude Include="QCFSRecord.h" />
     <ClInclude Include="QCFSRoot.h" />
     <ClInclude Include="QCFSStream.h" />
@@ -121,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QCFSBlock.cpp" />
+    <ClCompile Include="QCFSBlockTable.cpp" />
     <ClCompile Include="QCFSRoot.cpp" />
     <ClCompile Include="QCFSStream.cpp" />
     <ClCompile Include="QCFSVolume.cpp" />

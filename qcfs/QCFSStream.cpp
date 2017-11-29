@@ -20,6 +20,16 @@ bool QCFSStream::empty() {
 	return _elements == nullptr;  // Check to see if the pointer is set to `nullptr` (meaning the array is empty)
 }
 
+/* Takes in a loop function whose parameters are the current block, and two setters to set the file_table id, and the block_table id */
+void QCFSStream::for_each(std::function<void(QCFSBlock*)> loopfunc)
+{
+	QCFSBlock* current = palloc(QCFSBlock);
+	do {
+		this->next(current);
+		loopfunc(current);
+	} while (!this->empty());
+}
+
 /* Pops the element at the front of the `_elements` array */
 void QCFSStream::next(QCFSBlock* block) {
 	// if the `_elements` array points somewhere...

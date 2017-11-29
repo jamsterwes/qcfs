@@ -21,5 +21,7 @@ std::string block_id_to_string(block_id id)
 		return "EXPANSION_DATA";
 	case block_id::FREE:
 		return "FREE";
+	default:
+		return "UNKNOWN";
 	}
 }
